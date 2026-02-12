@@ -2,13 +2,6 @@
 {
     public interface IOperation
     {
-        //private int _id;
-
-        //.Net 9 ,10
-        //public void Save()
-        //{
-        //}
-
         void Save(Employee Entity);
         void GetAll();
         Employee GetById(int id);
@@ -16,3 +9,4 @@
         void Delete(int id);
     }
 }
+
