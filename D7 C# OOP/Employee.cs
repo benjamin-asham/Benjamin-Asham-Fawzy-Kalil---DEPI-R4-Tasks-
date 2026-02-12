@@ -1,115 +1,61 @@
-﻿namespace Day7OOPDemoLab
+namespace D7 C# OOP .Models
 {
-    public class Employee : Human, IOperation, ISendEmail
+    public class Employee : Human
     {
-        //Static member                                    0 1 2 3 4
-        public static List<int> Numbers = new List<int>() { 1, 2, 3, 4, 5 };
-        //Numbers[2] Index
+        private int _code;
+        private string _job;
 
-        private static List<Employee> employees = new List<Employee>()
+        public Employee() : base()
         {
-            new Employee() { Id = 1, Name = "Ahmed", Code = 101, Job = "Developer" },
-            new Employee() { Id = 2, Name = "tame", Code = 101, Job = "Developer" },
-            new Employee() { Id = 3, Name = "ali", Code = 101, Job = "Developer" },
-            new Employee() { Id = 4, Name = "Mohamed", Code = 101, Job = "Developer" }
-        };
+            _job = "Developer";
+        }
 
-        //Employee emp = new Employee() { Id = 1, Name = "Ahmed", Code = 101, Job = "Developer" };
+        public Employee(int id, string name, int code, string job) : base(id, name)
+        {
+            Code = code;
+            Job = job;
+        }
 
-        //Field
-        private int code = 1;
-        //Auto Property
-        public string Job { get; set; } = "Developer";
-        //Property Full
         public int Code
         {
-            get { return code; }
-            set { code = value; }
+            get => _code;
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentException("Code must be greater than 0");
+                _code = value;
+            }
         }
 
-        public static List<Employee> Employees { get => employees; set => employees = value; }
+        public string Job
+        {
+            get => _job;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Job cannot be empty");
+                _job = value;
+            }
+        }
 
-        //default - Constructor
-        public Employee()
-        {
-            //Employees.Add(emp);
-            // new Employee() { Id = 1, Name = "Ahmed", Code = 101, Job = "Developer" };
-        }
-        //Overload
-        public Employee(int code, string job)
-        {
-            this.code = code;
-            this.Job = job;
-        }
-        //Method 
-        public void Work()
-        {
-
-        }
         public override string SayHello()
         {
-            return "Welcome .... ";
+            return $"مرحباً، أنا {Name} وأعمل كـ {Job}!";
         }
-        public void Save(Employee emp)
+
+        public override string GetInfo()
         {
-            Employees.Add(emp);
+            return base.GetInfo() + $", Code: {Code}, Job: {Job}";
         }
-        public void Update(int id, Employee NewEmp)
-        {
-            Employee selectEmployee = employees.FirstOrDefault(e => e.Id == id);
-            if (selectEmployee != null)
-            {
-                selectEmployee.Name = NewEmp.Name;
-                selectEmployee.Code = NewEmp.Code;
-                selectEmployee.Job = NewEmp.Job;
-                Console.WriteLine($"Employee with Id {id} updated successfully.");
-            }
-            else
-            {
-                Console.WriteLine($"Employee with Id {id} not found.");
-            }
-        }
-        public void Delete(int id)
-        {
-            Employee empToDelete = employees.FirstOrDefault(e => e.Id == id);
-            if (empToDelete != null)
-            {
-                employees.Remove(empToDelete);
-                Console.WriteLine($"Employee with Id {id} deleted successfully.");
-            }
-            else
-            {
-                Console.WriteLine($"Employee with Id {id} not found.");
-            }
-        }
-        public Employee GetById(int id)
-        {
-            Employee emp = employees.FirstOrDefault(e => e.Id == id);
-            if (emp != null)
-            {
-                Console.WriteLine($"Found: {emp.ToString()}");
-            }
-            else
-            {
-                Console.WriteLine($"Employee with Id {id} not found.");
-            }
-            return emp;
-        }
-        public void SendEmail(string email)
-        {
-            throw new NotImplementedException();
-        }
+
         public override string ToString()
         {
-            return $"ID {Id} Name {Name} Code {Code} Job {Job}";  //base.ToString();
+            return $"[ID: {Id}] {Name} - Code: {Code} - Job: {Job}";
         }
-        public void GetAll()
+
+        public void Work()
         {
-            Console.WriteLine(" ----------------- Read All Employee --------------- ");
-            foreach (Employee e in Employee.Employees)
-            {
-                Console.WriteLine(e.ToString());
-            }
+            Console.WriteLine($"{Name} يعمل الآن كـ {Job}...");
         }
     }
 }
