@@ -1,4 +1,4 @@
-﻿namespace Day7OOPDemoLab
+﻿namespace D7 C# OOP 
 {
     public abstract class Human
     {
@@ -15,3 +15,4 @@
         public abstract string SayHello();
     }
 }
+
